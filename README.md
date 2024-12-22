@@ -61,7 +61,7 @@ The project is designed to provide social media features, including user authent
 ### Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/mazidu-social-media.git
+   git clone https://github.com/your-username/mazidul-social-media.git
    cd mazidu-social-media
    ```
 
@@ -118,24 +118,3 @@ The project is designed to provide social media features, including user authent
 
 ---
 
-## Project Structure
-```plaintext
-Mazidu-Social-Media-Project
-├── pom.xml
-├── src
-│   └── main
-│       ├── java
-│       │   └── com.mazid
-│       │       ├── config
-│       │       ├── controller
-│       │       ├── exceptions
-│       │       ├── models
-│       │       ├── repository
-│       │       ├── request
-│       │       ├── response
-│       │       └── service
-│       └── resources
-│           ├── application.properties
-│           └── static
-└── README.md
-```
