@@ -1,48 +1,49 @@
 package com.mazid.controller;
 
-import com.mazid.models.Comment;
+import com.mazid.models.Message;
 import com.mazid.models.User;
-import com.mazid.service.CommentService;
+import com.mazid.service.MessageService;
 import com.mazid.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-public class CommentController {
+public class CreateMessage {
+
     @Autowired
-    private CommentService commentService;
+    private MessageService messageService;
 
     @Autowired
     private UserService userService;
 
-    // Endpoint to create a new comment on a post
-    @PostMapping("/api/comments/post/{postId}")
-    public Comment createComment(@RequestBody Comment comment,
+    // Endpoint to create a new message in a specific chat
+    @PostMapping("api/messages/chat/{chatId}")
+    public Message createMessage(@RequestBody Message req,
                                  @RequestHeader("Authorization") String jwt,
-                                 @PathVariable("postId") Integer postId
-    ) throws Exception {
+                                 @PathVariable Integer chatId) throws Exception {
 
         // Find the user from the JWT token
         User user = userService.findUserByJwt(jwt);
 
-        // Create the comment for the specified post
-        Comment createdComment = commentService.createComment(comment, postId, user.getId());
+        // Create the new message in the specified chat
+        Message message = messageService.createMessage(user, chatId, req);
 
-        return createdComment;
+        return message;
     }
 
-    // Endpoint to like a comment
-    @PutMapping("/api/comments/like/{commentId}")
-    public Comment likeComment(@RequestHeader("Authorization") String jwt,
-                               @PathVariable("commentId") Integer commentId
-    ) throws Exception {
+    // Endpoint to retrieve all messages in a specific chat
+    @GetMapping("api/messages/chat/{chatId}")
+    public List<Message> findChatsMessage(@RequestHeader("Authorization") String jwt,
+                                          @PathVariable Integer chatId) throws Exception {
 
         // Find the user from the JWT token
         User user = userService.findUserByJwt(jwt);
 
-        // Like the specified comment
-        Comment likeComment = commentService.likeComment(commentId, user.getId());
+        // Retrieve all messages in the specified chat
+        List<Message> messages = messageService.findChatsMessages(chatId);
 
-        return likeComment;
+        return messages;
     }
 }
