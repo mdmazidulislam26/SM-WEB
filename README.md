@@ -62,7 +62,7 @@ The project is designed to provide social media features, including user authent
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/mazidul-social-media.git
-   cd mazidu-social-media
+   cd mazidul-social-media
    ```
 
 2. Set up the MySQL database:
