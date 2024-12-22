@@ -16,23 +16,26 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Arrays;
 import java.util.Collections;
 
+// Configuration class for security settings
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity// Enables Spring Security for the application
 public class AppConfig {
+    // Configures HTTP security for the application
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
        http.sessionManagement(management -> management.sessionCreationPolicy(
-               SessionCreationPolicy.STATELESS))
+               SessionCreationPolicy.STATELESS))// Sets session management to stateless for REST APIs
                .authorizeHttpRequests(Authorize -> Authorize
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll())
-               .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)
-                .csrf(csrf -> csrf.disable())
-               .cors(cors -> cors.configurationSource(corsConfigurationSource()));
+                .requestMatchers("/api/**").authenticated()// Protects API endpoints
+                .anyRequest().permitAll())// Allows access to all other endpoints
+               .addFilterBefore(new jwtValidator(), BasicAuthenticationFilter.class)// Adds custom JWT validation filter
+                .csrf(csrf -> csrf.disable())// Disables CSRF protection for stateless APIs
+               .cors(cors -> cors.configurationSource(corsConfigurationSource()));// Configures CORS settings
 
         return http.build();
     }
 
+    // Configures CORS (Cross-Origin Resource Sharing) settings
     private CorsConfigurationSource corsConfigurationSource() {
 
         return new CorsConfigurationSource() {
@@ -40,20 +43,19 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 
                 CorsConfiguration cfg = new CorsConfiguration();
-                cfg.setAllowedOrigins(Arrays.asList(
-                        "http://http://localhost:3000/"
-                ));
-                cfg.setAllowedMethods(Collections.singletonList("*"));
-                cfg.setAllowCredentials(true);
-                cfg.setAllowedHeaders(Collections.singletonList("*"));
-                cfg.setExposedHeaders(Arrays.asList(("Authorization")));
-                cfg.setMaxAge(3600L);
+                cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000/"));// Specifies allowed origins
+                cfg.setAllowedMethods(Collections.singletonList("*"));// Allows all HTTP methods
+                cfg.setAllowCredentials(true);// Allows credentials such as cookies
+                cfg.setAllowedHeaders(Collections.singletonList("*"));// Allows all headers
+                cfg.setExposedHeaders(Arrays.asList(("Authorization")));// Exposes Authorization header
+                cfg.setMaxAge(3600L);// Sets max age for caching preflight requests
 
                 return cfg;
             }
         };
     }
 
+    // Configures a password encoder bean using BCrypt
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
