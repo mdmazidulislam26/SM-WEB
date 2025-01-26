@@ -1,4 +1,4 @@
-## Introduction to Java Spring Boot.
+## Introduction to Java Spring Boot
 
 ---
 
