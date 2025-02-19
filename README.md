@@ -4,7 +4,7 @@
 
 This repository contains the source code for a **Full-Stack Social Media Web Application** 
 built using **Java Spring Boot** for the backend. 
-The project is designed to provide social media features, including user authentication, posts, comments, reels, messaging, and more.
+The project is designed to provide social media features, including user authentication, posts, comments, reels, messaging, and more
 
 ---
 
